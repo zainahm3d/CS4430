@@ -1,0 +1,655 @@
+use computer;
+
+-- 1
+insert into product values ('C', '1100', 'pc');
+insert into pc values ('1100', 3.2, 1024, 180, 2499);
+
+-- +-------+-------+---------+
+-- | maker | model | type    |
+-- +-------+-------+---------+
+-- | A     | 1001  | pc      |
+-- | A     | 1002  | pc      |
+-- | A     | 1003  | pc      |
+-- | A     | 2004  | laptop  |
+-- | A     | 2005  | laptop  |
+-- | A     | 2006  | laptop  |
+-- | B     | 1004  | pc      |
+-- | B     | 1005  | pc      |
+-- | B     | 1006  | pc      |
+-- | B     | 2007  | laptop  |
+-- | C     | 1007  | pc      |
+-- | C     | 1100  | pc      |
+-- | D     | 1008  | pc      |
+-- | D     | 1009  | pc      |
+-- | D     | 1010  | pc      |
+-- | D     | 3004  | printer |
+-- | D     | 3005  | printer |
+-- | E     | 1011  | pc      |
+-- | E     | 1012  | pc      |
+-- | E     | 1013  | pc      |
+-- | E     | 2001  | laptop  |
+-- | E     | 2002  | laptop  |
+-- | E     | 2003  | laptop  |
+-- | E     | 3001  | printer |
+-- | E     | 3002  | printer |
+-- | E     | 3003  | printer |
+-- | F     | 2008  | laptop  |
+-- | F     | 2009  | laptop  |
+-- | G     | 2010  | laptop  |
+-- | H     | 3006  | printer |
+-- | H     | 3007  | printer |
+-- +-------+-------+---------+
+
+-- +-------+-------+------+-------+---------+
+-- | model | speed | ram  | hdisk | price   |
+-- +-------+-------+------+-------+---------+
+-- | 1001  |  2.66 | 1024 |   250 | 2114.00 |
+-- | 1002  |  2.10 |  512 |   250 |  995.00 |
+-- | 1003  |  1.42 |  512 |    80 |  478.00 |
+-- | 1004  |  2.80 | 1024 |   250 |  649.00 |
+-- | 1005  |  3.20 |  512 |   250 |  630.00 |
+-- | 1006  |  3.20 | 1024 |   320 | 1049.00 |
+-- | 1007  |  2.20 | 1024 |   200 |  510.00 |
+-- | 1008  |  2.20 | 2048 |   250 |  770.00 |
+-- | 1009  |  2.00 | 1024 |   250 |  650.00 |
+-- | 1010  |  2.80 | 2048 |   300 |  770.00 |
+-- | 1011  |  1.86 | 2048 |   160 |  959.00 |
+-- | 1012  |  2.80 | 1024 |   160 |  649.00 |
+-- | 1013  |  3.06 |  512 |    80 |  529.00 |
+-- | 1100  |  3.20 | 1024 |   180 | 2499.00 |
+-- +-------+-------+------+-------+---------+
+
+-- 2
+insert into product select maker , model + 1100, 'laptop'
+    from product where type = 'pc';
+
+insert into laptop select model+1100, speed , ram , hdisk , 17 , price+500 from pc;
+
+-- +-------+-------+---------+
+-- | maker | model | type    |
+-- +-------+-------+---------+
+-- | A     | 1001  | pc      |
+-- | A     | 1002  | pc      |
+-- | A     | 1003  | pc      |
+-- | A     | 2004  | laptop  |
+-- | A     | 2005  | laptop  |
+-- | A     | 2006  | laptop  |
+-- | A     | 2101  | laptop  |
+-- | A     | 2102  | laptop  |
+-- | A     | 2103  | laptop  |
+-- | B     | 1004  | pc      |
+-- | B     | 1005  | pc      |
+-- | B     | 1006  | pc      |
+-- | B     | 2007  | laptop  |
+-- | B     | 2104  | laptop  |
+-- | B     | 2105  | laptop  |
+-- | B     | 2106  | laptop  |
+-- | C     | 1007  | pc      |
+-- | C     | 1100  | pc      |
+-- | C     | 2107  | laptop  |
+-- | C     | 2200  | laptop  |
+-- | D     | 1008  | pc      |
+-- | D     | 1009  | pc      |
+-- | D     | 1010  | pc      |
+-- | D     | 2108  | laptop  |
+-- | D     | 2109  | laptop  |
+-- | D     | 2110  | laptop  |
+-- | D     | 3004  | printer |
+-- | D     | 3005  | printer |
+-- | E     | 1011  | pc      |
+-- | E     | 1012  | pc      |
+-- | E     | 1013  | pc      |
+-- | E     | 2001  | laptop  |
+-- | E     | 2002  | laptop  |
+-- | E     | 2003  | laptop  |
+-- | E     | 2111  | laptop  |
+-- | E     | 2112  | laptop  |
+-- | E     | 2113  | laptop  |
+-- | E     | 3001  | printer |
+-- | E     | 3002  | printer |
+-- | E     | 3003  | printer |
+-- | F     | 2008  | laptop  |
+-- | F     | 2009  | laptop  |
+-- | G     | 2010  | laptop  |
+-- | H     | 3006  | printer |
+-- | H     | 3007  | printer |
+-- +-------+-------+---------+
+
+-- +-------+-------+------+-------+--------+---------+
+-- | model | speed | ram  | hdisk | screen | price   |
+-- +-------+-------+------+-------+--------+---------+
+-- | 2001  |  2.00 | 2048 |   240 |  20.10 | 3673.00 |
+-- | 2002  |  1.73 | 1024 |    80 |  17.00 |  949.00 |
+-- | 2003  |  1.80 |  512 |    60 |  15.40 |  549.00 |
+-- | 2004  |  2.00 |  512 |    60 |  13.30 | 1150.00 |
+-- | 2005  |  2.16 | 1024 |   120 |  17.00 | 2500.00 |
+-- | 2006  |  2.00 | 2048 |    80 |  15.40 | 1700.00 |
+-- | 2007  |  1.83 | 1024 |   120 |  13.30 | 1429.00 |
+-- | 2008  |  1.60 | 1024 |   100 |  15.40 |  900.00 |
+-- | 2009  |  1.60 |  512 |    80 |  14.10 |  680.00 |
+-- | 2010  |  2.00 | 2048 |   160 |  15.40 | 2300.00 |
+-- | 2101  |  2.66 | 1024 |   250 |  17.00 | 2614.00 |
+-- | 2102  |  2.10 |  512 |   250 |  17.00 | 1495.00 |
+-- | 2103  |  1.42 |  512 |    80 |  17.00 |  978.00 |
+-- | 2104  |  2.80 | 1024 |   250 |  17.00 | 1149.00 |
+-- | 2105  |  3.20 |  512 |   250 |  17.00 | 1130.00 |
+-- | 2106  |  3.20 | 1024 |   320 |  17.00 | 1549.00 |
+-- | 2107  |  2.20 | 1024 |   200 |  17.00 | 1010.00 |
+-- | 2108  |  2.20 | 2048 |   250 |  17.00 | 1270.00 |
+-- | 2109  |  2.00 | 1024 |   250 |  17.00 | 1150.00 |
+-- | 2110  |  2.80 | 2048 |   300 |  17.00 | 1270.00 |
+-- | 2111  |  1.86 | 2048 |   160 |  17.00 | 1459.00 |
+-- | 2112  |  2.80 | 1024 |   160 |  17.00 | 1149.00 |
+-- | 2113  |  3.06 |  512 |    80 |  17.00 | 1029.00 |
+-- | 2200  |  3.20 | 1024 |   180 |  17.00 | 2999.00 |
+-- +-------+-------+------+-------+--------+---------+
+
+-- 3
+delete from pc where hdisk < 100;
+-- +-------+-------+------+-------+---------+
+-- | model | speed | ram  | hdisk | price   |
+-- +-------+-------+------+-------+---------+
+-- | 1001  |  2.66 | 1024 |   250 | 2114.00 |
+-- | 1002  |  2.10 |  512 |   250 |  995.00 |
+-- | 1004  |  2.80 | 1024 |   250 |  649.00 |
+-- | 1005  |  3.20 |  512 |   250 |  630.00 |
+-- | 1006  |  3.20 | 1024 |   320 | 1049.00 |
+-- | 1007  |  2.20 | 1024 |   200 |  510.00 |
+-- | 1008  |  2.20 | 2048 |   250 |  770.00 |
+-- | 1009  |  2.00 | 1024 |   250 |  650.00 |
+-- | 1010  |  2.80 | 2048 |   300 |  770.00 |
+-- | 1011  |  1.86 | 2048 |   160 |  959.00 |
+-- | 1012  |  2.80 | 1024 |   160 |  649.00 |
+-- | 1100  |  3.20 | 1024 |   180 | 2499.00 |
+-- +-------+-------+------+-------+---------+
+-- 4
+delete from laptop l where l.model in
+    (
+    select l.model from product l2
+        where l2.maker in (
+            select distinct l2.maker from product l3 where l3.maker not in
+                (
+                select l2.maker from product l2 where l2.type = 'printer'
+                )
+            )
+    );
+
+-- 5
+update product
+set maker = 'A'
+where maker = 'B' ;
+
+-- +-------+-------+---------+
+-- | maker | model | type    |
+-- +-------+-------+---------+
+-- | A     | 1001  | pc      |
+-- | A     | 1002  | pc      |
+-- | A     | 1003  | pc      |
+-- | A     | 1004  | pc      |
+-- | A     | 1005  | pc      |
+-- | A     | 1006  | pc      |
+-- | A     | 2004  | laptop  |
+-- | A     | 2005  | laptop  |
+-- | A     | 2006  | laptop  |
+-- | A     | 2007  | laptop  |
+-- | A     | 2101  | laptop  |
+-- | A     | 2102  | laptop  |
+-- | A     | 2103  | laptop  |
+-- | A     | 2104  | laptop  |
+-- | A     | 2105  | laptop  |
+-- | A     | 2106  | laptop  |
+-- | C     | 1007  | pc      |
+-- | C     | 1100  | pc      |
+-- | C     | 2107  | laptop  |
+-- | C     | 2200  | laptop  |
+-- | D     | 1008  | pc      |
+-- | D     | 1009  | pc      |
+-- | D     | 1010  | pc      |
+-- | D     | 2108  | laptop  |
+-- | D     | 2109  | laptop  |
+-- | D     | 2110  | laptop  |
+-- | D     | 3004  | printer |
+-- | D     | 3005  | printer |
+-- | E     | 1011  | pc      |
+-- | E     | 1012  | pc      |
+-- | E     | 1013  | pc      |
+-- | E     | 2001  | laptop  |
+-- | E     | 2002  | laptop  |
+-- | E     | 2003  | laptop  |
+-- | E     | 2111  | laptop  |
+-- | E     | 2112  | laptop  |
+-- | E     | 2113  | laptop  |
+-- | E     | 3001  | printer |
+-- | E     | 3002  | printer |
+-- | E     | 3003  | printer |
+-- | F     | 2008  | laptop  |
+-- | F     | 2009  | laptop  |
+-- | G     | 2010  | laptop  |
+-- | H     | 3006  | printer |
+-- | H     | 3007  | printer |
+-- +-------+-------+---------+
+
+-- 6
+update pc
+    set ram = ram * 2,
+    hdisk = hdisk + 60 ;
+
+-- +-------+-------+------+-------+---------+
+-- | model | speed | ram  | hdisk | price   |
+-- +-------+-------+------+-------+---------+
+-- | 1001  |  2.66 | 2048 |   310 | 2114.00 |
+-- | 1002  |  2.10 | 1024 |   310 |  995.00 |
+-- | 1004  |  2.80 | 2048 |   310 |  649.00 |
+-- | 1005  |  3.20 | 1024 |   310 |  630.00 |
+-- | 1006  |  3.20 | 2048 |   380 | 1049.00 |
+-- | 1007  |  2.20 | 2048 |   260 |  510.00 |
+-- | 1008  |  2.20 | 4096 |   310 |  770.00 |
+-- | 1009  |  2.00 | 2048 |   310 |  650.00 |
+-- | 1010  |  2.80 | 4096 |   360 |  770.00 |
+-- | 1011  |  1.86 | 4096 |   220 |  959.00 |
+-- | 1012  |  2.80 | 2048 |   220 |  649.00 |
+-- | 1100  |  3.20 | 2048 |   240 | 2499.00 |
+-- +-------+-------+------+-------+---------+
+-- Query OK, 14 rows affected (0.01 sec)
+-- Rows matched: 14  Changed: 14  Warnings: 0
+
+-- 7
+update
+    laptop l set
+    l.screen = l.screen + 1,
+    l.price = l.price - 100
+where
+    l.model in (select r.model from product r where r.maker = 'B');
+
+
+use battleship;
+
+-- 8
+insert into classes (class, type, country, guns, bore, displacement)
+values ("Nelson","ship","British",9,16,34000);
+
+insert into ships values("Nelson", "Nelson", 1927);
+insert into ships values("Rodney", "Nelson", 1927);
+
+-- +----------------+------+-------------+------+------+--------------+
+-- | class          | type | country     | guns | bore | displacement |
+-- +----------------+------+-------------+------+------+--------------+
+-- | Bismarck       | bb   | Germany     |    8 |   15 |        42000 |
+-- | Iowa           | bb   | USA         |    9 |   16 |        46000 |
+-- | Kongo          | bc   | Japan       |    8 |   14 |        32000 |
+-- | Nelson         | ship | British     |    9 |   16 |        34000 |
+-- | North Carolina | bb   | USA         |    9 |   16 |        37000 |
+-- | Renown         | bc   | Gt. Britain |    6 |   15 |        32000 |
+-- | Revenge        | bb   | Gt. Britain |    8 |   15 |        29000 |
+-- | Tennessee      | bb   | USA         |   12 |   14 |        32000 |
+-- | Yamato         | bb   | Japan       |    9 |   18 |        65000 |
+-- +----------------+------+-------------+------+------+--------------+
+-- 9 rows in set (0.00 sec)
+
+-- mysql> select * from ships;
+-- +-----------------+----------------+----------+
+-- | name            | class          | launched |
+-- +-----------------+----------------+----------+
+-- | California      | Tennessee      |     1921 |
+-- | Haruna          | Kongo          |     1915 |
+-- | Hiei            | Kongo          |     1914 |
+-- | Iowa            | Iowa           |     1943 |
+-- | Kirishima       | Kongo          |     1915 |
+-- | Kongo           | Kongo          |     1913 |
+-- | Missouri        | Iowa           |     1944 |
+-- | Musashi         | Yamato         |     1942 |
+-- | Nelson          | Nelson         |     1927 |
+-- | New Jersey      | Iowa           |     1943 |
+-- | North Carolina  | North Carolina |     1941 |
+-- | Ramillies       | Revenge        |     1917 |
+-- | Renown          | Renown         |     1916 |
+-- | Repulse         | Renown         |     1916 |
+-- | Resolution      | Revenge        |     1916 |
+-- | Revenge         | Revenge        |     1916 |
+-- | Rodney          | Nelson         |     1927 |
+-- | Royal Oak       | Revenge        |     1916 |
+-- | Royal Sovereign | Revenge        |     1916 |
+-- | Tennessee       | Tennessee      |     1920 |
+-- | Washington      | North Carolina |     1941 |
+-- | Wisconsin       | Iowa           |     1944 |
+-- | Yamato          | Yamato         |     1941 |
+-- +-----------------+----------------+----------+
+-- 23 rows in set (0.00 sec)
+
+-- 9
+insert into classes values ("Venoto","ship","Italian",9,15,41000);
+insert into classes values ("Roma","ship","Italian",9,15,41000);
+insert into classes values ("Vittorio","ship","Italian",9,15,41000);
+
+-- +----------------+------+-------------+------+------+--------------+
+-- | class          | type | country     | guns | bore | displacement |
+-- +----------------+------+-------------+------+------+--------------+
+-- | Bismarck       | bb   | Germany     |    8 |   15 |        42000 |
+-- | Iowa           | bb   | USA         |    9 |   16 |        46000 |
+-- | Kongo          | bc   | Japan       |    8 |   14 |        32000 |
+-- | Nelson         | ship | British     |    9 |   16 |        34000 |
+-- | North Carolina | bb   | USA         |    9 |   16 |        37000 |
+-- | Renown         | bc   | Gt. Britain |    6 |   15 |        32000 |
+-- | Revenge        | bb   | Gt. Britain |    8 |   15 |        29000 |
+-- | Roma           | ship | Italian     |    9 |   15 |        41000 |
+-- | Tennessee      | bb   | USA         |   12 |   14 |        32000 |
+-- | Venoto         | ship | Italian     |    9 |   15 |        41000 |
+-- | Vittorio       | ship | Italian     |    9 |   15 |        41000 |
+-- | Yamato         | bb   | Japan       |    9 |   18 |        65000 |
+-- +----------------+------+-------------+------+------+--------------+
+
+-- 10
+delete from ships
+where name in (select ship from outcomes where result = 'sunk');
+
+-- +-----------------+----------------+----------+
+-- | name            | class          | launched |
+-- +-----------------+----------------+----------+
+-- | California      | Tennessee      |     1921 |
+-- | Haruna          | Kongo          |     1915 |
+-- | Hiei            | Kongo          |     1914 |
+-- | Iowa            | Iowa           |     1943 |
+-- | Kongo           | Kongo          |     1913 |
+-- | Missouri        | Iowa           |     1944 |
+-- | Musashi         | Yamato         |     1942 |
+-- | Nelson          | Nelson         |     1927 |
+-- | New Jersey      | Iowa           |     1943 |
+-- | North Carolina  | North Carolina |     1941 |
+-- | Ramillies       | Revenge        |     1917 |
+-- | Renown          | Renown         |     1916 |
+-- | Repulse         | Renown         |     1916 |
+-- | Resolution      | Revenge        |     1916 |
+-- | Revenge         | Revenge        |     1916 |
+-- | Rodney          | Nelson         |     1927 |
+-- | Royal Oak       | Revenge        |     1916 |
+-- | Royal Sovereign | Revenge        |     1916 |
+-- | Tennessee       | Tennessee      |     1920 |
+-- | Washington      | North Carolina |     1941 |
+-- | Wisconsin       | Iowa           |     1944 |
+-- | Yamato          | Yamato         |     1941 |
+-- +-----------------+----------------+----------+
+
+-- 11
+update classes set
+bore = bore * 2.54,
+displacement = displacement * 1.1;
+
++----------------+------+-------------+------+------+--------------+
+| class          | type | country     | guns | bore | displacement |
++----------------+------+-------------+------+------+--------------+
+| Bismarck       | bb   | Germany     |    8 |   38 |        46200 |
+| Iowa           | bb   | USA         |    9 |   41 |        50600 |
+| Kongo          | bc   | Japan       |    8 |   36 |        35200 |
+| Nelson         | ship | British     |    9 |   41 |        37400 |
+| North Carolina | bb   | USA         |    9 |   41 |        40700 |
+| Renown         | bc   | Gt. Britain |    6 |   38 |        35200 |
+| Revenge        | bb   | Gt. Britain |    8 |   38 |        31900 |
+| Roma           | ship | Italian     |    9 |   38 |        45100 |
+| Tennessee      | bb   | USA         |   12 |   36 |        35200 |
+| Venoto         | ship | Italian     |    9 |   38 |        45100 |
+| Vittorio       | ship | Italian     |    9 |   38 |        45100 |
+| Yamato         | bb   | Japan       |    9 |   46 |        71500 |
++----------------+------+-------------+------+------+--------------+
+
+-- 12
+delete from classes where class in (select from ships having count(name) < 3);
+
+
+use catalog;
+
+-- 51
+select distinct pname
+from parts, catalog
+where parts.pid = catalog.pid;
+
++-----------------------------------+
+| pname                             |
++-----------------------------------+
+| Left Handed Bacon Stretcher Cover |
+| Acme Widget Washer                |
+| I Brake for Crop Circles Sticker  |
+| Anti-Gravity Turbine Generator    |
+| Fire Hydrant Cap                  |
+| 7 Segment Display                 |
++-----------------------------------+
+
+-- 54
+select p.pname from parts p, catalog c, suppliers s
+where p.pid = c.pid and c.sid = s.sid
+and s.sname = 'Acme Widget Suppliers'
+and not exists
+(
+    select *
+    from catalog c2, suppliers s2
+    where p.pid = c2.pid and c2.sid = s2.sid
+    and s2.sname <> 'Acme Widget Suppliers'
+);
++--------------------+
+| pname              |
++--------------------+
+| Acme Widget Washer |
++--------------------+
+
+-- 55
+select distinct c.sid from catalog c
+where c.cost > (
+                select avg(c1.cost)
+                from catalog c1
+                where c1.pid = c.pid
+                );
++-----+
+| sid |
++-----+
+|   1 |
+|   2 |
+|   3 |
++-----+
+
+-- 56
+select p.pid, s.sname
+from parts p, suppliers s, catalog c
+where c.pid = p.pid
+and c.sid = s.sid
+and c.cost =
+(
+    select max(c1.cost)
+    from catalog c1
+    where c1.pid = p.pid
+);
+
++-----+-----------------------+
+| pid | sname                 |
++-----+-----------------------+
+|   4 | Acme Widget Suppliers |
+|   1 | Big Red Tool and Die  |
+|   3 | Big Red Tool and Die  |
+|   8 | Perfunctory Parts     |
+|   9 | Perfunctory Parts     |
+|   5 | Alien Aircaft Inc.    |
+|   6 | Alien Aircaft Inc.    |
+|   7 | Alien Aircaft Inc.    |
++-----+-----------------------+
+
+-- 57
+select distinct c.sid from catalog c
+where not exists
+(
+    select * from parts p
+    where p.pid = c.pid
+    and p.color <> 'Red'
+);
+
++-----+
+| sid |
++-----+
+|   2 |
+|   1 |
+|   3 |
++-----+
+
+-- 58
+select distinct c.sid
+from catalog c, parts p
+where c.pid = p.pid and p.color = 'Red'
+union
+select distinct c1.sid
+from catalog c1, parts p1
+where c1.pid = p1.pid and p1.color = 'Green';
++-----+
+| sid |
++-----+
+|   2 |
+|   1 |
+|   3 |
++-----+
+
+-- 59
+(
+    select distinct c.sid
+    from catalog c, parts p
+    where c.pid = p.pid and p.color = 'Red'
+)
+natural join
+(
+    select distinct c1.sid
+    from catalog c1, parts p1
+    where c1.pid = p1.pid and p1.color = 'Green'
+);
+
+-- This errored out, not sure why.
+
+-- 60
+-- @todo
+
+-- 61
+select s.sname, count(*) as supplierPartCount
+from suppliers s, parts p, catalog c
+where p.pid = c.pid and c.sid = s.sid
+and (color = 'Green')
+group by s.sname, s.sid;
++-------------------+-------------------+
+| sname             | supplierPartCount |
++-------------------+-------------------+
+| Perfunctory Parts |                 1 |
++-------------------+-------------------+
+
+-- 62
+select s.sname, max(c.cost) as maxcost
+from suppliers s, parts p, catalog c
+where p.pid = c.pid and c.sid = s.sid
+group by s.sname;
+
++-----------------------+------------+
+| sname                 | maxcost    |
++-----------------------+------------+
+| Acme Widget Suppliers |      11.70 |
+| Big Red Tool and Die  |      16.50 |
+| Perfunctory Parts     |      12.50 |
+| Alien Aircaft Inc.    | 1247548.23 |
++-----------------------+------------+
+
+-- 63
+use company;
+
+select e.ename, e.age
+from emp e, works w1, works w2, dept d1, dept d2
+where
+    e.eid = w1.eid
+    and w1.did = d1.did
+    and d1.dname = 'Hardware'
+    and e.eid = w2.eid
+    and w2.did = d2.did
+    and d2.dname = 'Software';
+
++----------------+------+
+| ename          | age  |
++----------------+------+
+| Mary Johnson   |   44 |
+| Stanley Browne |   23 |
++----------------+------+
+
+-- 64
+select w.did, count(w.eid)
+from works w
+group by w.did
+having
+(
+    select sum(w1.pct_time)
+    from works w1
+    where w1.did = w.did
+) > 2000;
++-----+--------------+
+| did | count(w.eid) |
++-----+--------------+
+|   2 |           26 |
+|   6 |           22 |
++-----+--------------+
+
+-- 65
+select e.ename from emp e
+where e.salary > all
+(
+    select d.budget
+    from dept d, works w
+    where e.eid = w.eid and d.did = d.did
+);
+
+-- Empty set (0.00 sec)
+
+-- 66
+select distinct d.managerid
+from dept d
+where 1000000 < all
+    (
+        select d2.budget
+        from dept d2
+        where d2.managerid = d.managerid
+    );
+
++-----------+
+| managerid |
++-----------+
+| 287321212 |
+| 578875478 |
++-----------+
+
+-- 67
+select e.ename from emp e
+where e.eid in (select d.managerid from dept d
+where d.budget = (select max(d2.budget) from dept d2));
++----------------+
+| ename          |
++----------------+
+| Michael Miller |
+| Edward Baker   |
++----------------+
+
+-- 68
+select d.managerid from dept d
+where
+    (
+        select sum(d2.budget)
+        from dept d2
+        where d2.managerid = d.managerid
+    ) > 5000000;
++-----------+
+| managerid |
++-----------+
+| 287321212 |
+| 578875478 |
++-----------+
+
+-- 71
+use university;
+select distinct s.sname from student s, class c, enrolled e, faculty f
+where s.snum = e.snum
+and e.cname = c.cname
+and c.fid = f.fid
+and f.fname = 'Ivana Teach' and s.level = 'JR';
+
++--------------------+
+| sname              |
++--------------------+
+| Christopher Garcia |
+| Paul Hall          |
++--------------------+
