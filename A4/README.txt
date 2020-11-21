@@ -1,10 +1,7 @@
 Prerequisites:
-
-install mysql connector
-sudo apt install python3-mysql.connector
-
-All main database functions are in functions.py
+    install mysql connector
+    sudo apt install python3-mysql.connector
 
 How to run:
-    1. make sure the northwind database is loaded into mysql
+    1. ensure you are in the correct directory
     2. python3 main.py
