@@ -52,19 +52,28 @@ def addOrder(cursor):
     cursor.execute('select max(orderID) from orders')
     orderID = int(cursor.fetchone()[0]) + 1;
     print(f'New order ID will be: {orderID}')
+
+    # get next available details ID
+    cursor.execute('select max(id) from order_details')
+    detailsID = int(cursor.fetchone()[0]) + 1;
+
     productID = input("Enter product ID: ")
+    quantity = input("Enter desired quantity: ")
     customerID = input("Enter customer ID: ")
 
     # get next available employee ID (according to requirements doc)
     cursor.execute('select max(employeeID) from orders')
-    employeeID = int(cursor.fetchone()[0]) + 1;
+    employeeID = int(cursor.fetchone()[0])
     print(f'New employee ID will be: {employeeID}')
 
     orderDate = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f'Order date: {orderDate}')
 
-    requiredDate = input("Enter required date (YYYY-MM-DD HH-MM-SS): ")
-    shippedDate = input("Enter shipped date (YYYY-MM-DD HH-MM-SS): ")
+    # requiredDate = input("Enter required date (YYYY-MM-DD HH-MM-SS): ")
+    # shippedDate = input("Enter shipped date (YYYY-MM-DD HH-MM-SS): ")
+    requiredDate = orderDate;
+    shippedDate = orderDate;
+
     shipVia = input("Enter ship via: ")
     freight = float(input("Enter freight: "))
     shipName = input("Enter name to ship to: ")
@@ -74,15 +83,31 @@ def addOrder(cursor):
     postalCode = input("Enter postal code: ")
     country = input("Enter country: ")
 
-    cursor.execute(f'insert into order_details values ()')
-    cursor.execute(f'insert into orders values ( \'{orderID}\',\'{customerID}\',\'{employeeID}\',\'{orderDate}\',\'{requiredDate}\',\'{shippedDate}\',\'{shipVia}\',\'{freight}\'\'{shipName}\',\'{address}\',\'{city}\',\'{region}\',\'{postalCode}\',\'{country}\')')
+    # get unit price from order ID
+    cursor.execute(f'select unitprice from products where productID = {productID}')
+    unitPrice = int(cursor.fetchone()[0])
+    print(f'Unit price for ID {productID}: {unitPrice}')
+    cursor.reset()
+
+    # OrderID CustomerID EmployeeID OrderDate RequiredDate ShippedDate ShipVia Freight ShipName ShipAddress ShipCity ShipRegion ShipPostalCode ShipCountry
+    # update orders
+    sqlCommand = (f'insert into orders values(\'{orderID}\',\'{customerID}\',\'{employeeID}\',\'{orderDate}\',\'{requiredDate}\',\'{shippedDate}\',\'{shipVia}\',\'{freight}\',\'{shipName}\',\'{address}\',\'{city}\',\'{region}\',\'{postalCode}\',\'{country}\')')
+    cursor.execute(sqlCommand)
+
+    # update order_details
+    sqlCommand = (f'insert into order_details(ProductID, OrderID, UnitPrice, Quantity, Discount) values({productID}, {orderID}, {unitPrice}, {quantity}, 0)')
+    cursor.execute(sqlCommand)
 
     print("Adding order and committing transaction")
     # end transaction
-    cursor.execute('commit')
-    cursor.reset();
 
-    print("done")
+    try:
+        cursor.execute('commit')
+        cursor.reset();
+    except:
+        print('Database commit failed! Rolling back.')
+        cursor.execute('rollback')
+        return
 
 def removeOrder(cursor):
     id = validateInteger(input("Please enter an order ID to remove: "))
